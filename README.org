@@ -1,0 +1,116 @@
+:PROPERTIES:
+:ID:       3a59db3e-59c4-4899-80ae-c87394412ffb
+:END:
+#+title: ob-soql
+
+Runs Salesforce Object Query Language (SOQL) queries via SFDX in org-mode.
+
+Add via:
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'org-babel-load-languages '(soql . t))
+#+end_src
+
+
+JSON output:
+
+#+begin_src soql :username devhub :resultformat json :results output :wrap src json :exports both
+SELECT Id, Name
+FROM ScratchOrgInfo
+LIMIT 5
+#+end_src
+
+#+RESULTS:
+#+begin_src json
+{
+  "status": 0,
+  "result": {
+    "done": true,
+    "totalSize": 5,
+    "records": [
+      {
+        "attributes": {
+          "type": "ScratchOrgInfo",
+          "url": "/services/data/v54.0/sobjects/ScratchOrgInfo/2SR4p000000AuMcGAK"
+        },
+        "Id": "2SR4p000000AuMcGAK",
+        "Name": "00633454"
+      },
+      {
+        "attributes": {
+          "type": "ScratchOrgInfo",
+          "url": "/services/data/v54.0/sobjects/ScratchOrgInfo/2SR4p000000BLsaGAG"
+        },
+        "Id": "2SR4p000000BLsaGAG",
+        "Name": "00656233"
+      },
+      {
+        "attributes": {
+          "type": "ScratchOrgInfo",
+          "url": "/services/data/v54.0/sobjects/ScratchOrgInfo/2SR4p000000BMigGAG"
+        },
+        "Id": "2SR4p000000BMigGAG",
+        "Name": "00656910"
+      },
+      {
+        "attributes": {
+          "type": "ScratchOrgInfo",
+          "url": "/services/data/v54.0/sobjects/ScratchOrgInfo/2SR4p000000ClOsGAK"
+        },
+        "Id": "2SR4p000000ClOsGAK",
+        "Name": "00779109"
+      },
+      {
+        "attributes": {
+          "type": "ScratchOrgInfo",
+          "url": "/services/data/v54.0/sobjects/ScratchOrgInfo/2SR4p000000DE0pGAG"
+        },
+        "Id": "2SR4p000000DE0pGAG",
+        "Name": "00801843"
+      }
+    ]
+  }
+}
+#+end_src
+
+Human readable:
+
+#+begin_src soql :username devhub :resultformat human :results table :exports both
+SELECT Id, Name
+FROM ScratchOrgInfo
+LIMIT 5
+#+end_src
+
+#+RESULTS:
+: ID                  NAME
+: ──────────────────  ────────
+: 2SR4p000000AuMcGAK  00633454
+: 2SR4p000000BLsaGAG  00656233
+: 2SR4p000000BMigGAG  00656910
+: 2SR4p000000ClOsGAK  00779109
+: 2SR4p000000DE0pGAG  00801843
+: Total number of records retrieved: 5.
+
+#+begin_src soql :username devhub :resultformat csv :results raw :exports both
+SELECT Id, Name
+FROM ScratchOrgInfo
+LIMIT 5
+#+end_src
+
+#+RESULTS:
+: Id,Name
+: 2SR4p000000AuMcGAK,00633454
+: 2SR4p000000BLsaGAG,00656233
+: 2SR4p000000BMigGAG,00656910
+: 2SR4p000000ClOsGAK,00779109
+: 2SR4p000000DE0pGAG,00801843
+
+
+Followed by =org-table-convert-region= to create:
+
+
+| Id                 |     Name |
+| 2SR4p000000AuMcGAK | 00633454 |
+| 2SR4p000000BLsaGAG | 00656233 |
+| 2SR4p000000BMigGAG | 00656910 |
+| 2SR4p000000ClOsGAK | 00779109 |
+| 2SR4p000000DE0pGAG | 00801843 |
